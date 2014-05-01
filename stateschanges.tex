@@ -1,0 +1,339 @@
+%
+% File acl2012.tex
+%
+% Contact: Maggie Li (cswjli@comp.polyu.edu.hk), Michael White (mwhite@ling.osu.edu)
+%%
+%% Based on the style files for ACL2008 by Joakim Nivre and Noah Smith
+%% and that of ACL2010 by Jing-Shin Chang and Philipp Koehn
+
+
+\documentclass[11pt,a4paper]{article}
+\renewcommand{\baselinestretch}{1.035}
+\usepackage{acl2014}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{epsfig,url,algorithm,algorithmic,multirow}
+%\usepackage{microtype}
+\usepackage{amssymb}
+
+
+%for writing 
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+%\usepackage{calligra}
+%\usepackage{calrsfs}
+%\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage[mathscr]{euscript}
+
+
+%%EXTRA HOME-GROWN MACROS
+
+\newcommand{\squishlist}{
+ \begin{list}{$\bullet$}
+  { \setlength{\itemsep}{0pt}
+     \setlength{\parsep}{3pt}
+     \setlength{\topsep}{3pt}
+     \setlength{\partopsep}{0pt}
+     \setlength{\leftmargin}{1.5em}
+     \setlength{\labelwidth}{1em}
+     \setlength{\labelsep}{0.5em} } }
+
+\newcommand{\squishlisttwo}{
+ \begin{list}{$\bullet$}
+  { \setlength{\itemsep}{0pt}
+     \setlength{\parsep}{0pt}
+    \setlength{\topsep}{0pt}
+    \setlength{\partopsep}{0pt}
+    \setlength{\leftmargin}{2em}
+    \setlength{\labelwidth}{1.5em}
+    \setlength{\labelsep}{0.5em} } }
+
+\newcommand{\squishend}{\end{list}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{hypothesis}{Hypothesis}
+%\newtheorem{hypothesis}{Hypothesis}[section]
+\newcommand{\newWord}[1]{\emph{#1}}
+\newcommand{\ignore}[1]{}
+%\newcommand{\comment}[1]{{\color{red}{#1}}}
+\newcommand{\comment}[1]{}
+%\newcommand{\remark}[1]{{\color{red}{#1}}}
+\newcommand{\indented}[1]{
+	\begin{tabbing}
+		blah\=\+\kill
+		\parbox{8cm}{#1}
+	\end{tabbing}
+}
+\renewcommand{\paragraph}[1]{\noindent\textbf{#1.}}
+\newcommand{\ruleline}[1]{\indented{#1}}
+
+
+
+\newcommand{\fact}{{\footnotesize \texttt}}
+\newcommand{\factid}[2]{\emph{#1:} \texttt{#2}}
+\newcommand{\factspo}[3]{{\footnotesize $<$\texttt{#1}, \texttt{#2}, \texttt{#3}$>$}}
+\newcommand{\factidspo}[4]{\emph{#1:} \texttt{#2} \texttt{#3} \texttt{#4}}
+\newcommand{\spotl}[1]{\texttt{<#1>}}
+\newcommand{\spotlfive}[5]{$\langle$\texttt{#1}, \texttt{#2}, \texttt{#3}, [\texttt{#4}], $\mathtt{#5}\rangle$}
+\newcommand{\entity}[1]{{\footnotesize \texttt{#1}}}
+%\newcommand{\entity}{{\footnotesize \texttt}}
+\newcommand{\rel}[1]{{\footnotesize \texttt{#1}}}
+
+% Fabian: Use this to define our pattern language
+\newcommand{\instance}[1]{\textit{$\langle$#1$\rangle$}}
+\newcommand{\pos}[1]{\textit{#1}}
+\newcommand{\pattern}[1]{\textit{#1}}
+\newcommand{\str}[1]{``#1''}
+\newcommand{\svo}{\pattern{{\instance{S}}V{\instance{O}}}}
+
+% Fabian: Choose second option to remove superfluous stuff for space reasons
+\newcommand{\unimportant}[1]{#1}
+%\newcommand{\unimportant}[1]{}
+
+% Fabian: for full-text words
+% I find texts that use different styles for different types of words very unreadable.
+% usually one style is sufficient.
+\newcommand{\word}[1]{``#1''}
+
+% hyphen
+\hyphenation{Wi-ki-pe-dia}
+
+%%%%%%%%%%%% system
+\newcommand{\sellname}{FactChecker}
+
+\newcommand{\highlight}[1]{{\color{red} #1}}
+
+%\usepackage{acl-hlt2011}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{url}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{varwidth}
+
+%% END EXTRA HOME-GROWN MACROS
+
+% take from http://tex.stackexchange.com/questions/40283/wrapping-table-column-headings-in-turn-environment
+\newcommand{\turn}[3][10em]{% \turn[<width>]{<angle>}{<stuff>}
+  \rlap{\rotatebox{#2}{\begin{varwidth}[t]{#1}#3\end{varwidth}}}%
+}
+
+%\title{FactChecker: Leveraging Language and Co-mentions for\\
+\title{Learning State Change Sequences from Temporal Profiles of Entities to Detect Knowledge Base Updates}
+\author{Derry, Ndapa, Tom\\
+Carnegie Mellon University\\ 5000 Forbes Avenue\\Pittsburgh, PA\\
+  { \small
+    \{ndapa\}@cs.cmu.edu}
+}
+
+\author{
+%1st Author and 2nd Author\\
+%Organization\\
+%City, Country\\
+%  { \small
+%    email addresses}
+}
+
+\begin{document}
+
+\maketitle
+
+%\vspace{-1cm} %ineffective here anyway
+
+\begin{abstract}
+ Methods for information extraction (IE) and knowledge base (KB)
+construction have been widely studied in recent years.  However, a largely
+under-explored case is  maintenance of  knowledge once it has been acquired. 
+Attributes of entities in the knowledge base  change over time. Capturing 
+such state changes  has implications for 
+the correctness of the  KB. Current IE methods are not capable of detecting such changes.
+In this paper, we present a method for detecting 
+state changes in attributes values of KB entities.
+Our method is based on a identifying state change sequences over temporal profiles of similar entities. Our  experiments show the potential of a our approach.
+% for detecting state changes and hence recommending updates to specific attributes of entities in the KB.
+
+\end{abstract}
+
+\section{Introduction}
+%Motivation
+\paragraph{Motivation}
+Recent progress in automatic knowledge acquisition has resulted in a number of
+large knowledge bases (KBs) \cite{Bollacker08,Carlson10,Suchanek07} . Such KBs contain many millions of entities,  organized in hundreds to hundred thousands of semantic classes,  and hundred millions of relational facts between entities. With this progress comes new  research problems regarding maintenance of KBs. One such problem is the detection of state changes to entities. When one attribute value for a given entity is no longer true, we need to update the knowledge base.  This can occur for example if a person  gets divorced,  they are no longer the spouse of who they were married to.  Furthermore, when someone is fired or resigns from their job, they are no longer employees of their current employer. Currently, most IE methods detect patterns for learning attributes and mix them together with those involving state changes in the attribute.  It is not unusual for an IE system to learn that the phrases: ``is married to" and ``is divorced from" from are both good for indicating the ``hasSpouse" attribute. In reality,  one  of those phrases marks the beginning and the other marks the end of an attribute value for the ``hasSpouse" attribute.  
+
+\paragraph{Problem Statement} 
+Prevalent approaches to IE extract knowledge from static Web snapshots such as the  ClueWeb crawl\footnote{lemurproject.org/clueweb09.php/} \cite{Fader11,Nakashole11}, with no mention of how to perform updates. Other approaches periodically extract from a corpus such as Wikipedia, every time re-applying the extractor to all the documents even those that did not change \cite{Suchanek07}.  The NELL system \cite{Carlson10} follows a never-ending' extraction model with the extraction process going on 24 hours a day. However NELL's focus is on language learning  to self improve on its reading ability over time. In contrast, here we focus on  detecting  updates to specific attributes of entities.  Detecting these changes has unique   challenges not seen in IE methods.
+\begin{enumerate}
+\item \textbf{Finer grained language understanding :}   Learning state changes requires differentiating between language used to indicate different states of a given attribute. This is a much harder task than learning phrases that are related to a given attribute in some \textit{any} way.
+
+\item \textbf{Targeted extraction model:}  IE methods often  extract everything they are able to find in a given corpus. However, to capture state changes, we need to instead employ a targeted extraction model. This model needs to find documents that  are promising for state change information for a given entity. A method that identifies the documents of interest can leverage  news aggregation and micro news platforms such as Twitter.
+\end{enumerate}
+
+In this work we focus on the first challenge of finer grained language understanding and leave the second one for future work.
+
+\paragraph{Contribution  and Paper Organization} 
+We developed a method for detected state changes. Our approach finds  state change sequences across temporal profiles of similar entities. \highlight{TO DO: describe method fully, followed by overview of the rest of the paper.}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\newpage
+%\begin{thebibliography}{ABCD99}
+\begin{thebibliography}{99}
+
+\bibitem[Angel 2012]{Angel12} A. Angel, N. Koudas, N. Sarkas, D. Srivastava: Dense Subgraph Maintenance under Streaming Edge Weight Updates for Real-time Story Identification. In \textit{Proceedings of the VLDB Endowment}, PVLDB 5(10):574--585, 2012.
+
+\bibitem [Auer 2007]{Auer07} S. Auer, C. Bizer, G. Kobilarov, J. Lehmann, R. Cyganiak, Z.G. Ives: DBpedia: A Nucleus for a Web of Open Data.  In \textit{Proceedings of the 6th International Semantic Web Conference (ISWC)}, pages 722--735, Busan, Korea, 2007.
+
+%\bibitem[Adler 2007]{Adler07} B. T.  Adler, L. de Alfaro: A content-driven reputation system for the wikipedia. In \textit{Proceedings  of the 16th International Conference on World Wide Web (WWW)}, pages  261-270, 2007.
+
+\bibitem[Banko 2007]{Banko07} M. Banko, M. J. Cafarella, S. Soderland, M. Broadhead, O. Etzioni: Open Information Extraction from the Web. In \textit{Proceedings of the 20th International Joint Conference on Artificial Intelligence (IJCAI)}, pages 2670--2676, Hyderabad, India, 2007.
+
+\bibitem[Bollacker 2008]{Bollacker08} K. D. Bollacker, C. Evans, P. Paritosh, T. Sturge, J. Taylor: Freebase: a Collaboratively Created Graph Database for Structuring Human Knowledge.  In \textit{Proceedings of the ACM SIGMOD International Conference on Management of Data (SIGMOD)}, pages, 1247-1250, Vancouver, BC, Canada, 2008.
+
+%\bibitem[Brown 2001]{Brown01} Lawrence D. Brown, T.Tony Cai, Anirban Dasgupta: Interval Estimation for a Binomial Proportion. Statistical Science 16: pages 101--133, 2001.
+%
+%\bibitem[Cabrio 2012]{Cabrio2012} E. Cabrio, S. Villata. Combining Textual Entailment and Argumentation Theory for Supporting Online Debates Interaction. In \textit{Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics (ACL)}, pp. 208-212, 2012.
+%
+%%\bibitem[Castillo 2011]{Castillo2011}C. Castillo, M. Mendoza, B. Poblete: Information credibility on twitter. In \textit{Proceedings  of the 20th International Conference on World Wide Web (WWW)}, pages 675-684, ACM, 2011.
+
+\bibitem[Carlson 2010]{Carlson10} A. Carlson, J. Betteridge, R.C. Wang, E.R. Hruschka, T.M. Mitchell: Coupled Semi-supervised Learning for Information Extraction. In \textit{Proceedings of the Third International Conference on Web Search and Web Data Mining (WSDM)}, pages 101--110, New York, NY, USA, 2010.
+		 
+		 
+\bibitem[Carlson 2010]{Carlson10b} A. Carlson, J. Betteridge, B. Kisiel, B. Settles, E. R. Hruschka Jr., T. M. Mitchell: Toward an Architecture for Never-Ending Language Learning.  In \textit{Proceedings of the Twenty-Fourth AAAI Conference on Artificial Intelligence (AAAI)} 2010.
+
+\bibitem[Del Corro 2013]{DelCorro2013} L. Del Corro, R. Gemulla: ClausIE: clause-based open information extraction. In \textit{Proceedings  of the 22nd International Conference on World Wide Web (WWW)}, pages 355-366. 2013.
+
+%\bibitem[Dong 2009]{Dong09}X. Dong, L. Berti-Equille, and D. Srivastava. Truth discovery and copying detection in a dynamic world.  In \textit{Proceedings of the VLDB Endowment} PVLDB, 2(1), pp. 562-573, 2009.
+%
+%%\bibitem{Cooper2012} Brian F. Cooper (Editor): Special Issue on Big Data War Stories. IEEE Data Engineering Bulleting 35(2): 2012.
+
+\bibitem[Das Sarma 2011]{DasSarma11} A. Das Sarma, A. Jain, C. Yu: Dynamic Relationship and Event Discovery.  In \textit{Proceedings of the Forth International Conference on Web Search and Web Data Mining (WSDM)}, pages 207--216, Hong Kong, China, 2011.
+
+\bibitem[Fader 2011]{Fader11} A. Fader, S. Soderland, O. Etzioni: Identifying Relations for Open Information Extraction. In \textit{Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 1535--1545, Edinburgh, UK, 2011.
+%               		 
+%	
+%\bibitem[Galland 2010]{Galland2010} A. Galland, S. Abiteboul, A. Marian, P Senellart: Corroborating information from disagreeing views. In \textit{Proceedings of the 3rd International Conference on Web Search and Web Data Mining (WSDM)}, pages 131-140, 2010.
+	
+\bibitem[Havasi 2007]{Havasi07} C. Havasi, R. Speer,  J. Alonso. ConceptNet 3: a Flexible, Multilingual Semantic Network for Common Sense Knowledge.  In \textit{Proceedings of the Recent Advances in Natural Language Processing (RANLP)}, Borovets, Bulgaria, 2007.
+	
+%%\bibitem[Hellmann 2009]{Hellmann09}
+%%Sebastian Hellmann, Claus Stadler, Jens Lehmann, Sören Auer: DBpedia Live Extraction. OTM Conferences (2) 2009: 1209-1223.
+%	 
+%%\bibitem [Hoffart 2011]{Hoffart11}	J. Hoffart, M. A. Yosef, I.Bordino and H. Fuerstenau, M. Pinkal, M. Spaniol, B.Taneva, S.Thater, Gerhard Weikum: Robust Disambiguation of Named Entities in Text. In \textit{Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 782--792, Edinburgh, UK, 2011.	
+
+\bibitem[Hoffart 2011]{Hoffart11b} J. Hoffart, F. Suchanek, K. Berberich, E. Lewis-Kelham, G. de Melo, G. Weikum: YAGO2: Exploring and Querying World Knowledge in Time, Space, Context, and Many Languages. In \textit{Proceedings  of the 20th International Conference on World Wide Web (WWW)}, pages 229--232, Hyderabad, India. 2011.
+
+%%\bibitem [Hoffart 2012]{Hoffart2012} J. Hoffart, F. Suchanek, K. Berberich, G. Weikum: YAGO2: A Spatially and Temporally Enhanced Knowledge Base from Wikipedia. Artificial Intelligence 2012. 
+%
+%%\bibitem{IBM12} IBM Journal of Research and Development 56(3/4), Special Issue on ''This is Watson'', 2012
+%
+%%\bibitem[Landis 1977]{Landis77}  J. R. Landis,  G. G. Koch:  The measurement of observer agreement for categorical data in Biometrics. Vol. 33, pp. 159–174, 1977.
+%
+%\bibitem [Kaplan 2002]{Kaplan2002}R. Kaplan: Politics and the American Press: The Rise of Objectivity, pages 1865-1920, New York, Cambridge University Press, 2002. 
+%
+%\bibitem[Li 2011]{Li2011} X. Li and W. Meng, C. T. Yu: T-verifier: Verifying truthfulness of fact statements. 
+%	In \textit{Proceedings of the International Conference on Data Engineering (ICDE)}, pp. 63-74, 2011.
+%
+%\bibitem[Lin 2001]{Lin01} Dekang Lin, Patrick Pantel: DIRT: discovery of inference rules from text. KDD 2001
+%\bibitem[Liu 2005]{Liu05}B. Liu, M. Hu, J. Cheng: Opinion Observer: analyzing and comparing opinions
+%on the Web. In\textit{Proceedings  of the 14th International Conference on World Wide Web (WWW)}, pages 342–351, 2005.
+%
+%\bibitem[Lotan 2013]{Lotan2013}A. Lotan, A. Stern, I. Dagan
+%TruthTeller: Annotating Predicate Truth.  In \textit{Proceedings of Human Language Technologies: Conference of the North American Chapter of the Association of Computational Linguistics (HLT-NAACL)}, pp. 752-757, 2013.
+%
+%%\bibitem [Mindich 1998] {Mindich1998} D. Mindich: Just the Facts: How ``Objectivity" Came to Define American Journalism. New York. New York University Press. 1998.
+
+\bibitem[Kipper 2008]{Kipper08} Karin Kipper, Anna Korhonen, Neville Ryant, Martha Palmer,
+A Large-scale Classification of English Verbs,
+Language Resources and Evaluation Journal, 42(1): 21-40, 2008,
+data available at \url{http://verbs.colorado.edu/~mpalmer/projects/verbnet/downloads.html}
+
+\bibitem[Nakashole 2011]{Nakashole11} N. Nakashole, M. Theobald, G. Weikum: Scalable Knowledge Harvesting with High Precision and High Recall.
+		In \textit{Proceedings of the 4th International Conference on
+		 Web Search and Web Data Mining (WSDM)}, pages 227--326, Hong Kong, China, 2011.
+		 
+\bibitem[Nakashole 2013]{Nakashole13} N. Nakashole, T. Tylenda, G. Weikum
+		 Fine-grained Semantic Typing of Emerging Entities. In \textit{Proceedings of the 51st Annual Meeting of the Association for Computational Linguistics (ACL)}, pp. 1488-1497, 2013.
+		 
+\bibitem[Nakashole 2012]{Nakashole12} N. Nakashole, G. Weikum, F. Suchanek: PATTY:  A Taxonomy of Relational Patterns with Semantic Types.
+		In \textit{Proceedings of the 2012 Joint Conference on Empirical Methods
+               in Natural Language Processing and Computational Natural
+               Language Learning (EMNLP-CoNLL)}, pages 1135 -1145, Jeju, South Korea, 2012.
+          
+%\bibitem [Nastase 2010]{Nastase10} V. Nastase, M. Strube, B. Boerschinger, C\"acilia Zirn, Anas Elghafari: WikiNet: A Very Large Scale Multi-Lingual Concept Network. In \textit{Proceedings of the 7th International Conference on Language Resources and Evaluation(LREC)}, Malta, 2010.
+%
+%\bibitem[Pang 2004]{Pang04}B. Pang, L. Lee: A Sentimental Education: Sentiment Analysis Using Subjectivity Summarization Based on Minimum Cuts.  In \textit{Proceedings of the 42nd Annual Meeting of the Association for Computational Linguistics (ACL)}, 271-278, 2004.
+%
+%\bibitem[Pasternack 2010]{Pasternack2010} J. Pasternack, D. Roth: Knowing What to Believe. In \textit{Proceedings the  International Conference on Computational Linguistics (COLING)}, pp. 877-885, Beijing, China. 2010.
+%
+%\bibitem[Pasternack 2013]{Pasternack2013} J. Pasternack, D. Roth: Latent credibility analysis. In \textit{Proceedings  of the 22nd International Conference on World Wide Web (WWW)}, pp. 1009-1020, 2013.
+%
+%\bibitem[Riloff 2003]{Riloff03}E. Riloff, J.  Wiebe: Learning Learning extraction patterns for subjective expressions. In \textit{Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 105–112, 2013.
+%
+%\bibitem[Recasens 2013] {Recasens2013}M. Recasens, C. Danescu-Niculescu-Mizil, Dan Jurafsky: 
+% Linguistic Models for Analyzing and Detecting Biased Language.  In \textit{Proceedings of the 51st Annual Meeting of the Association for Computational Linguistics (ACL)}, pp. 1650-1659, 2013.
+ 
+\bibitem[Niu 2012]{Niu12} Feng Niu, Ce Zhang, Christopher Re, Jude W. Shavlik: DeepDive: Web-scale Knowledge-base Construction using Statistical Learning and Inference. In  the VLDS Workshop, pages 25-28, 2012.
+
+
+\bibitem[Ritter 2012]{Ritter12} A. Ritter, Mausam, O. Etzioni, S. Clark: Open Domain Event Extraction from Twitter.  In \textit{Proceedings of the 18th ACM SIGKDD International Conference on Knowledge
+               Discovery and Data Mining (KDD)}, pages 1104-1112, Beijing, China, 2012.
+               
+\bibitem[Shahaf 2010]{Shahaf10}  D. Shahaf, Carlos Guestrin: Connecting the dots between news articles.  In \textit{Proceedings of the 16th ACM SIGKDD International Conference on Knowledge
+Discovery and Data Mining (KDD)}, pages 623-632, 2010.
+
+\bibitem[Sakaki 2010]{Sakaki10}  T. Sakaki, M. Okazaki, Y.  Matsuo: Earthquake Shakes Twitter Users: Real-time Event Detection by Social Sensors.  In \textit{Proceedings  of the 19th International Conference
+ on World Wide Web (WWW)}, pages 851-860, Raleigh, North Carolina, USA, 2010.
+ 
+\bibitem[Suchanek 2007]{Suchanek07} F. M. Suchanek, G. Kasneci, G. Weikum: Yago: a Core of Semantic Knowledge. In \textit{Proceedings  of the 16th International Conference
+ on World Wide Web (WWW)} pages, 697-706,  Banff, Alberta, Canada, 2007.
+
+\bibitem[Suchanek 2009]{Suchanek09} F. M. Suchanek, M. Sozio, G. Weikum: SOFIE: A Self-organizing Framework for Information Extraction. In\textit{Proceedings  of the 18th International Conference
+on World Wide Web (WWW)}, pages 631--640, Madrid, Spain, 2009.
+  
+%\bibitem[Talukdar 2012]{Talukdar12} P. P. Talukdar, D. T. Wijaya, Tom M. Mitchell: Acquiring temporal constraints between relations.  In \textit{Proceeding of the 21st ACM International Conference on Information and Knowledge Management}, pages 992-1001, CIKM 2012.
+%  
+% \bibitem[Turney 2002]{Turney02} P. D. Turney: Thumbs up or thumbs down? Semantic orientation applied to unsupervised classification of reviews. In \textit{Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics (ACL)}, pages 417–424. 2002.
+%
+%%\bibitem[Venetis 2011]{Venetis11} P. Venetis, A. Halevy, J. Madhavan, M. Pasca, W. Shen, F. Wu, G. Miao, C. Wu:
+%%Recovering Semantics of Tables on the Web.  In \textit{Proceedings of the VLDB Endowment},  PVLDB 4(9), pages, 528--538. 2011.
+%
+\bibitem[Wu 2012]{Wu12} W. Wu, H. Li, H. Wang, K. Zhu:
+Probase: A Probabilistic Taxonomy for Text Understanding. In \textit{Proceedings of the International Conference on Management of Data (SIGMOD)}, pages 481--492, Scottsdale, AZ, USA, 2012.
+\bibitem[W3C 2013]{W3CRDF04} Word Wide Web Consortium (W3C): RDF Primer. \url{http://www.w3.org/TR/rdf-primer/}, Accessed  2013.
+
+%\bibitem[Wiebe 2004]{Wiebe2004}J.  Wiebe, T. Wilson, R. Bruce, M. Bell, M. Martin. Learning
+%subjective language. Computational Linguistics, 30(3):277–308. 2004.
+%
+%%\bibitem[Wikipedia 2013]{Wikipedia2013}  Wikipedia: Neutral point of view. 
+%% \url{:http://en.wikipedia.org/wiki/Wikipedia:Neutral_point_of_view}, Accessed  2013.
+%
+% 
+% \bibitem[Yin 2007]{Yin07}X. Yin, J. Han, P. S. Yu : Truth Discovery with Multiple Conflicting Information Providers on the Web. In \textit{Proceedings of the International Conference on  Knowledge Discovery in Databases (KDD)} , pages1048-1052. 2007.
+% 
+% \bibitem[Yin 2011]{Yin11} X. Yin, W. Tan: Semi-supervised truth discover. In \textit{Proceedings of the 19th International Conference on World Wide Web (WWW)}, pp. 217-226, 2011.
+% 
+% \bibitem[Yu 2003]{Yu2003}H. Yu, V. Hatzivassiloglou: Towards Answering Opinion Questions: Separating Facts from Opinions and Identifying the Polarity of Opinion Sentences. In \textit{Proceedings of  the Conference on Empirical Methods in Natural Language Processing}, pages. 129-136, 2003.
+% 
+%  \bibitem[Zhao 2012]{Zhao2012} B. Zhao, B. I. P. Rubinstein, J. Gemmell,  J. Han: A Bayesian approach to discovering truth from conflicting sources for data integration. In \textit{Proceedings of the VLDB Endowment (PVLDB)}, 5(6):550-561, 2012.
+%
+  
+\end{thebibliography}
+
+
+\end{document}
+
+
