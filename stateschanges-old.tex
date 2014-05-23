@@ -129,7 +129,7 @@
 }
 
 %\title{FactChecker: Leveraging Language and Co-mentions for\\
-\title{Contextual Temporal Profiles\\ for Time Scoping of  Knowledge Base Facts}
+\title{Contextual Temporal Profiles\\ for State Change Detection in Knowledge Bases}
 \author{Derry, Ndapa, Tom\\
 Carnegie Mellon University\\ 5000 Forbes Avenue\\Pittsburgh, PA\\
   { \small
@@ -188,19 +188,6 @@ of KB entities.
 
 %\paragraph{Contribution  and Paper Organization} 
 %We developed a method for detected state changes. Our approach finds  state change sequences across temporal profiles of similar entities. \highlight{TO DO: describe method fully, followed by overview of the rest of the paper.}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Related work}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Temporal scoping of KB facts is still largely under-explored. 
-Prior work on   fall into two categories: i)  those that attempt to extract
-temporal scope from text, at the time of fact extraction; ii) those that attempt to extract temporal scope by leveraging statistics in large Web corpora. Early methods  fall under the category i); Timely YAGO [?] and PRAVDA [?] are two such methods. Timely YAGO  applies regular expressions to Wikipedia infoboxes to extract time scopes. It is therefore not applicable to any other corpora but Wikipedia.  The technique employed by PRAVDA it to use textual patterns along with a  graph-based re-ranking method. 
-Methods falling under category 1) have the downside that it is not clear how they can be applied to facts that are already in the knowledge base. 
-Before this paper, only one other approach fell under category ii), which is a recent system called CoTs(?).  Like our approach, Cots leverages corpus statistics to infer temporal scope information. CoTs models facts by temporal profiles to monitor how its mention rises and fall over time. Unlike our approach, CoTs is exclusively based on simple counts of facts in documents, ignoring the context of those documents. 
-
-
-TARSQI [?] is a tool for  automatically annotate events and time-expressions found in natural language text.  TARSQI uses the TimeML[?] markup language in its annotations.  The TempEval[?] challenge has led to a number of works on temporal relation extraction [??].  However, These approaches based on TimeML and TempEval  targeted at events which just verbs, different from the precise relational facts this paper is focused on. Furthermore, the focus appears to be on deciding which event happened before or after which one. This is also different from the specific dates we seek to expose in our work.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Method}
@@ -297,16 +284,41 @@ To detect state changes for a previously unseen entity, we generate its CTP, its
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-We carried out experiments to answer the following question:  do Contextual Temporal Profiles  help improve temporal scope extraction over plain temporal profiles?  We answer this questions by comparing to the CoTs system which leverages temporal profiles but only relies on mention counts and does not attempt to leverage the context of the mention.
+
+Experiments comparing to Cots, gradient on several relations whose
+temporal scopes are relevant when it comes to state changes,.
+In fact state change is nothing more than changes that occur with time, hence
+temporally scoping facts in a KB is isomorphic to state change detection, except we would like
+to do state change detection as it happens as opposed to retrospectively scoping facts 
+once they have been harvested.
 
 
-Our evaluation procedure is as follows: given a fact, its temporal scope. 
-For comparison purposes, we evaluate on the relations by CoTs. CoTs was evaluated on
-five  relations: three from  the US Administration domain (relations US President, US Vice President, and US Secretary of State) ; and two from the Academy Awards domain ( Best Director and Best
-Movie)
- 
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Related work}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Despite the importance of time in any information space,
+%gathering and distilling temporal knowledge fromWeb sources
+%remains a major research challenge [28]. To the best of our
+%knowledge, Timely YAGO [27] and PRAVDA [26], two re-
+%cently proposed techniques, are the only systems which try
+%to harvest temporal facts. Timely YAGO tries to automat-
+%ically scope facts using regular expressions in Wikipedia in-
+%foboxes, and hence is not applicable to widely available free
+%text. PRAVDA, a promising recent approach, uses a combi-
+%nation of textual patterns and graph-based re-ranking tech-
+%niques to harvest facts and their temporal points at the same
+%time. However, it is not immediately clear how this approach
+%could be used to temporally scope facts in an existing knowl-
+%edge base. Other works on temporal information extraction
+%have tackled Other works on temporal information extraction
+%have tackled partial aspects of the problem such as tempo-
+%ral relations identication between events [6, 14, 5, 16, 8, 29,
+%13]. However, these other works are not sucient to tempo-
+%rally scope facts as they are all focused on micro-reading of
+%time at a single document or sentence level, i.e., temporal ex-
+%pressions and relations are normalized and identied only on features derived from the document. However, web is unique in that it typically oers ample redundancy, and
+%hence it only seems natural to aggregate many observed cues
+%for a temporal fact in a statistical manner [28].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
